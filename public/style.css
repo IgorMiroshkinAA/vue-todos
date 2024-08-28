@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 
 :root {
-    --primary-color: #E30808;
+    --primary-color: #5098cb;
     --secondary-color: #e3e3e3;
     --light-color: #f0f0f0;
     --reverse-color: #ffffff;
@@ -33,7 +33,7 @@ button {
 .button {
     font-size: 1.6rem;
     padding: 0.6rem 1rem;
-    border-radius: 1.6rem;
+    border-radius: 10px;
 }
 
 .button--primary {
@@ -97,7 +97,7 @@ button {
     font: inherit;
     font-size: 1.6rem;
     border: 0.1rem solid var(--light-color);
-    border-radius: 1.6rem;
+    border-radius: 10px;
 }
 
 .text-input--focus {
@@ -131,6 +131,7 @@ button {
 
 .toggle-group .button {
     font-size: 1.6rem;
+    cursor: pointer;
 }
 
 .toggle-group .button:not(.button--primary):hover {
@@ -219,6 +220,7 @@ button {
 
 .todo-item:hover .todo-item__remove-button {
     opacity: 1;
+    cursor: pointer;
 }
 
 .todo-item__remove-button:hover {
@@ -228,6 +230,7 @@ button {
 .add-todo {
     display: grid;
     gap: 1.6rem;
+    margin-top: 20px;
 }
 
 .add-todo__show-form-button {
@@ -239,6 +242,7 @@ button {
     border: 0.1rem solid var(--light-color);
     border-radius: 1.6rem;
     transition: box-shadow 0.2s;
+    cursor: pointer;
 }
 
 .add-todo__show-form-button:hover {

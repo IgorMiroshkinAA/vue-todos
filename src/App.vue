@@ -1,10 +1,13 @@
 <template>
   <AppHeader />
-  <AppFilter />
+  <AppFilter
+      :active-filter="activeFilter"
+      @switch-filter="switchFilter"
+  />
 
   <main>
     <AppTodoList
-        :todos="todos"
+        :todos="filteredTodos"
         @toggle-todo="toggleTodo"
         @remove-todo="removeTodo"
     />
@@ -21,9 +24,11 @@ import AppTodoList from "@/components/AppTodoList.vue";
 import AppAddTodo from "@/components/AppAddTodo.vue";
 import AppFooter from "@/components/AppFooter.vue";
 import {ITodo} from "@/types/todo";
+import {FilterType} from "@/types/filter";
 
 interface State {
-  todos: ITodo[]
+  todos: ITodo[],
+  activeFilter: FilterType
 }
 
 export default defineComponent({
@@ -40,7 +45,8 @@ export default defineComponent({
         {
           id: 0, title: 'some text', status: true
         }
-      ]
+      ],
+      activeFilter: 'All'
     }
   },
   methods: {
@@ -56,6 +62,22 @@ export default defineComponent({
     },
     removeTodo(id: number) {
       this.todos = this.todos.filter(todo => todo.id !== id)
+    },
+    switchFilter(filter: FilterType) {
+      this.activeFilter = filter
+    }
+  },
+  computed: {
+    filteredTodos(): ITodo[] {
+      switch (this.activeFilter) {
+        case "Active":
+          return this.todos.filter(todo => !todo.status)
+        case "Done":
+          return this.todos.filter(todo => todo.status)
+        case "All":
+        default:
+          return this.todos
+      }
     }
   }
 })
