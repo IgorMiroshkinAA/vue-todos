@@ -1,27 +1,62 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <AppHeader />
+  <AppFilter />
+
+  <main>
+    <AppTodoList
+        :todos="todos"
+        @toggle-todo="toggleTodo"
+        @remove-todo="removeTodo"
+    />
+    <AppAddTodo @add-todo="addTodo" />
+  </main>
+  <AppFooter />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import {defineComponent} from "vue";
+import AppHeader from "@/components/AppHeader.vue";
+import AppFilter from "@/components/AppFilter.vue";
+import AppTodoList from "@/components/AppTodoList.vue";
+import AppAddTodo from "@/components/AppAddTodo.vue";
+import AppFooter from "@/components/AppFooter.vue";
+import {ITodo} from "@/types/todo";
+
+interface State {
+  todos: ITodo[]
+}
 
 export default defineComponent({
-  name: 'App',
   components: {
-    HelloWorld
-  }
-});
-</script>
+    AppFooter,
+    AppAddTodo,
+    AppTodoList,
+    AppFilter,
+    AppHeader
+  },
+  data(): State {
+    return {
+      todos: [
+        {
+          id: 0, title: 'some text', status: true
+        }
+      ]
+    }
+  },
+  methods: {
+    addTodo(todo: ITodo) {
+      this.todos.push(todo)
+    },
+    toggleTodo(id: number) {
+      const targetTodo = this.todos.find(todo => todo.id === id)
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+      if (targetTodo) {
+        targetTodo.status = !targetTodo.status
+      }
+    },
+    removeTodo(id: number) {
+      this.todos = this.todos.filter(todo => todo.id !== id)
+    }
+  }
+})
+</script>
